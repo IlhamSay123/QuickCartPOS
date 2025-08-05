@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Sale</title>
+  <link rel="stylesheet" href="styles/index.css">
+</head>
+<body>
+  <header class="header-bar">
+    <h1 class="title">Add a Sale</h1>
+    <a href="/" class="button-orange">← Back</a>
+  </header>
+
+  <main class="container">
+    <form action="/add-sale" method="POST" class="form-card">
+      <label for="date">Date:</label>
+      <input type="date" name="date" required>
+      <label for="age">Age (optional):</label>
+      <input type="number" name="age" min="0" placeholder="e.g. 30">
+      <label for="category">Product Category:</label>
+      <select name="category" required>
+        <option value="Electronics">Electronics</option>
+        <option value="Home">Home</option>
+        <option value="Apparel">Apparel</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <label for="quantity">Quantity:</label>
+      <input type="number" name="quantity" step="1" min="1" required>
+
+      <label for="price">Price per Unit (£):</label>
+      <input type="number" name="price" step="0.01" min="0" required>
+
+      <button type="submit" class="button-orange">Submit Sale</button>
+    </form>
+
+    <div class="text-center mt-4">
+      <a href="/all-sales" class="btn btn-outline-dark">📋 View All Sales</a>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 QuickCartPOS</p>
+  </footer>
+</body>
+</html>

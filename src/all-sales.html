@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>All Sales Records</title>
+  <link rel="stylesheet" href="/styles/index.css">
+  <style>
+    .sale-card {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    .sort-controls {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="header-bar">
+    <h1 class="title">All Sales</h1>
+    <a href="/" class="button-orange">← Back to Dashboard</a>
+  </header>
+
+  <main class="container">
+    <label for="sort-field">Sort by:</label>
+    <select id="sort-field" onchange="sortSales()" style="margin-left: 10px;">
+      <option value="date-asc">Date ↑</option>
+      <option value="date-desc">Date ↓</option>
+      <option value="category-asc">Category A–Z</option>
+      <option value="category-desc">Category Z–A</option>
+      <option value="amount-asc">Amount ↑</option>
+      <option value="amount-desc">Amount ↓</option>
+    </select>
+
+    </div>
+
+    <div style="text-align: right; margin-bottom: 1rem;">
+      <a href="/add-sale" class="btn btn-success">➕ Add New Sale</a>
+    </div>
+
+    <div id="sales-list">
+      <% rows.forEach((row, idx) => { %>
+        <div class="sale-card" data-date="<%= row.values[1] %>">
+          <strong>Sale #<%= row.id %></strong>
+          <ul>
+            <% headers.forEach((header, i) => { %>
+              <li><strong><%= header %>:</strong> <%= row.values[i] %></li>
+            <% }) %>
+          </ul>
+          <div>
+            <a href="/edit-sale/<%= row.id %>" class="btn btn-sm btn-warning">Edit</a>
+            <a href="/delete-sale/<%= row.id %>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this sale?')">Delete</a>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </main>
+
+  <script>
+function sortSales() {
+  const sortOption = document.getElementById('sort-field').value;
+  const list = document.getElementById('sales-list');
+  const cards = Array.from(list.children);
+
+  cards.sort((a, b) => {
+    const valA = a.innerText.toLowerCase();
+    const valB = b.innerText.toLowerCase();
+
+    const getValue = (label, element) => {
+      const match = element.innerText.match(new RegExp(`${label}:\\s*(.+)`));
+      return match ? match[1].trim() : "";
+    };
+
+    switch (sortOption) {
+      case "date-asc":
+        return new Date(getValue("Date", a)) - new Date(getValue("Date", b));
+      case "date-desc":
+        return new Date(getValue("Date", b)) - new Date(getValue("Date", a));
+      case "category-asc":
+        return getValue("Product Category", a).localeCompare(getValue("Product Category", b));
+      case "category-desc":
+        return getValue("Product Category", b).localeCompare(getValue("Product Category", a));
+      case "amount-asc":
+        return parseFloat(getValue("Total Amount", a)) - parseFloat(getValue("Total Amount", b));
+      case "amount-desc":
+        return parseFloat(getValue("Total Amount", b)) - parseFloat(getValue("Total Amount", a));
+    }
+  });
+
+  cards.forEach(card => list.appendChild(card));
+}
+</script>
+  <footer>
+    <p>&copy; 2025 QuickCartPOS</p>
+  </footer>
+
+</body>
+</html>

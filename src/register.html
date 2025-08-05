@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="styles/register.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="inner-container">
+            <!-- Registration Form Section -->
+            <div class="main-content">
+                <div class="form-container">
+                    <form action="/register" method="post">
+                        <h1>Sign Up</h1>
+                        <input type="text" name="name" placeholder="Your Name" required>
+                        <input type="email" name="email" placeholder="Your Email" required autocomplete="email">
+                        <input type="password" name="password" placeholder="Password" id="pass1" required 
+                               onkeyup="{if(this.value !== document.getElementById('pass2').value)
+                               {document.getElementById('error').innerHTML = 'Password doesn\'t Match';
+                               document.getElementById('submit').disabled=true;}else
+                               {document.getElementById('error').innerHTML = '';
+                               document.getElementById('submit').disabled=false;};}" autocomplete="new-password"/>
+                        <input type="password" name="password-repeat" placeholder="Repeat Your Password" id="pass2" required 
+                               onkeyup="{if(this.value !== document.getElementById('pass1').value)
+                               {document.getElementById('error').innerHTML = 'Password doesn\'t Match';
+                               document.getElementById('submit').disabled=true;}else
+                               {document.getElementById('error').innerHTML = '';
+                               document.getElementById('submit').disabled=false;};}" autocomplete="new-password" />
+                        <div id="error"></div>
+                        <div class="terms-conditions">
+                            <input type="checkbox" name="" id="terms-conditions-input" required>
+                            <label for="terms-conditions-input">I agree to all statements in <a href="#">Terms of service</a></label>
+                        </div>
+                        <button type="submit" name="submit" id="submit">Register</button>
+                    </form>
+                    <div class="login-container">
+                        <p>Already have an account? <a href="/login">Login</a></p>
+                    </div>
+                </div>
+            </div>
+            <!-- Image Section -->
+            <div class="image-container">
+                <img src="images/signup-image.jpg" alt="Register">
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('error').innerHTML = '';
+    </script>
+</body>
+</html>

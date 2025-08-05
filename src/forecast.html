@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Forecast & Tips</title>
+  <link rel="stylesheet" href="styles/index.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script defer src="script/forecast.js"></script>
+</head>
+<body>
+  <header class="header-bar">
+    <h1 class="title">Forecast & Tips</h1>
+    <a href="/" class="button-orange">← Back to Dashboard</a>
+  </header>
+
+  <main class="container">
+    <!-- Prediction and Tip -->
+    <section class="analysis-boxes">
+      <div class="analysis-box">
+        <h3>📅 Predicted Revenue (Next Month)</h3>
+        <p id="forecast-amount">Loading...</p>
+      </div>
+      <div class="analysis-box">
+        <h3>💡 AI Business Tip</h3>
+        <p id="forecast-tip">Thinking...</p>
+      </div>
+    </section>
+
+    <!-- Accuracy and Confidence -->
+    <section class="analysis-boxes">
+      <div class="analysis-box">
+        <h3>📊 Model Accuracy</h3>
+        <p id="model-stats">Loading...</p>
+      </div>
+      <div class="analysis-box">
+        <h3>📉 Confidence Interval</h3>
+        <p id="confidence-range">Loading...</p>
+      </div>
+    </section>
+
+
+
+    <!-- Chart -->
+    <section class="chart-container dynamic-section">
+      <h2>📈 Revenue Trend (Past 3 Months + Forecast)</h2>
+      <canvas id="forecast-chart"></canvas>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 QuickCartPOS</p>
+  </footer>
+</body>
+</html>

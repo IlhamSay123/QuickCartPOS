@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuickCartPOS Dashboard</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles/index.css">
+  <style>
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header with Logout Button -->
+  <header class="navbar navbar-dark bg-primary">
+    <div class="container-fluid">
+      <h1 class="navbar-brand mb-0">QuickCartPOS</h1>
+      <form action="/logout" method="get">
+        <button type="submit" class="logout-btn btn btn-warning">Logout</button>
+      </form>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container mt-4 mb-5">
+    <div class="welcome-message">
+      Welcome to your Dashboard!
+    </div>
+
+    <div class="row g-4">
+      <!-- Sales Overview -->
+      <div class="col-md-6">
+        <div class="card feature">
+          <div class="card-body">
+            <h5 class="card-title">Sales Overview</h5>
+            <p class="card-text">Track revenue, units sold, and growth rates.</p>
+            <a href="salesOverview.html" class="btn btn-primary">View Sales Overview</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category Analysis -->
+      <div class="col-md-6">
+        <div class="card feature">
+          <div class="card-body">
+            <h5 class="card-title">Category Performance</h5>
+            <p class="card-text">See which categories perform the best.</p>
+            <a href="categoryPerformance.html" class="btn btn-primary">View Category Analysis</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- View All Sales -->
+      <div class="col-md-12">
+        <div class="card feature border-success">
+          <div class="card-body">
+            <h5 class="card-title text-success">All Sales</h5>
+            <p class="card-text">Browse and manage your full dataset of sales.</p>
+            <a href="/all-sales" class="btn btn-success">View All Sales</a>
+          </div>
+        </div>
+      </div>
+      <a href="/export-sales" class="btn btn-outline-dark mt-2">⬇️ Export Sales Data</a>
+
+      <!-- Customer & Forecast Section -->
+<div class="row g-4">
+  <!-- Customer & Order Insights -->
+  <div class="col-md-6">
+    <div class="card feature">
+      <div class="card-body">
+        <h5 class="card-title">Customer & Order Insights</h5>
+        <p class="card-text">Analyze order patterns and customer behaviors.</p>
+        <a href="order-insights.html" class="btn btn-primary">View Insights</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Forecast & Tips -->
+  <div class="col-md-6">
+    <div class="card feature">
+      <div class="card-body">
+        <h5 class="card-title">Forecast & Tips</h5>
+        <p class="card-text">Predict sales trends and get growth tips.</p>
+        <a href="forecast.html" class="btn btn-primary">View Forecasts</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <!-- Last Updated Section -->
+    <div class="text-end text-muted small mt-3">Last updated: <span id="last-updated">Loading...</span></div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <a href="about.html" class="text-decoration-none">About Us</a> |
+      <a href="contact.html" class="text-decoration-none">Contact Us</a>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JavaScript Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const now = new Date();
+      document.getElementById('last-updated').textContent = now.toLocaleString();
+    });
+  </script>
+  <script src="script/index.js"></script>
+</body>
+</html>

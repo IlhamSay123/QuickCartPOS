@@ -1,0 +1,118 @@
+/* General Styling */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+header {
+  background-color: #007bff;
+  color: white;
+  padding: 15px;
+  text-align: center;
+}
+
+header nav a {
+  color: white;
+  text-decoration: none;
+  margin-left: 15px;
+}
+
+header nav a:hover {
+  text-decoration: underline;
+}
+
+main {
+  margin: 20px;
+}
+
+/* Chart Section */
+.chart-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+/* Summary Section */
+.summary {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.summary h2 {
+  text-align: center;
+}
+
+#summary-details {
+  margin-top: 15px;
+  font-size: 18px;
+}
+
+footer {
+  text-align: center;
+  padding: 10px;
+  background-color: #333;
+  color: white;
+}
+
+.filters {
+  max-width: 800px;
+  margin: 0 auto 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filters label {
+  font-weight: bold;
+}
+
+.filters select {
+  padding: 5px 10px;
+  font-size: 16px;
+}
+
+/* Additional Profit Analyses Section */
+.analysis-boxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.analysis-box {
+  background-color: #f9f9f9; /* Light background */
+  border: 1px solid #ddd;
+  border-radius: 15px; /* Rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  padding: 20px;
+  width: 250px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Hover animations */
+}
+
+.analysis-box h3 {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.analysis-box p {
+  font-size: 1rem;
+  color: #555;
+}
+
+.analysis-box:hover {
+  transform: translateY(-10px); /* Lift the box on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Emphasized shadow */
+  background-color: #f1f1f1; /* Slightly different background on hover */
+}

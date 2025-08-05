@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="styles/login.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="inner-container">
+            <!-- Image Section -->
+            <div class="image-container">
+                <img src="images/signin-image.jpg" alt="Login Illustration" class="login-image">
+            </div>
+            <!-- Login Form Section -->
+            <div class="main-content">
+                <div class="form-container">
+                    <form action="/login" method="post">
+                        <h1>Log In</h1>
+                        <input type="email" name="email" placeholder="Your Email" required>
+                        <input type="password" name="password" placeholder="Password" required>
+                        <button type="submit">Login</button>
+                    </form>
+                    <!-- Sleek placement of the Register option -->
+                    <div class="register-container">
+                        <p>Don't have an account? <a href="/register">Register</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

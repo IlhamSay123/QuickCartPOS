@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Sale</title>
+  <link rel="stylesheet" href="/styles/index.css">
+</head>
+<body>
+  <header class="header-bar">
+    <h1 class="title">Edit Sale</h1>
+    <a href="/all-sales" class="button-orange">← Back to All Sales</a>
+  </header>
+
+  <main class="container">
+    <form action="/edit-sale/<%= index %>" method="POST" class="form-card">
+      <label for="date">Date:</label>
+      <input type="date" name="date" value="<%= sale.date %>" required>
+
+      <label for="category">Product Category:</label>
+      <input type="text" name="category" value="<%= sale.category %>" required>
+
+      <label for="quantity">Quantity:</label>
+      <input type="number" name="quantity" step="1" min="1" value="<%= sale.quantity %>" required>
+
+      <label for="price">Price per Unit (£):</label>
+      <input type="number" name="price" step="0.01" min="0" value="<%= sale.price %>" required>
+
+      <button type="submit" class="btn btn-warning mt-3">Update Sale</button>
+    </form>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 QuickCartPOS</p>
+  </footer>
+</body>
+</html>
