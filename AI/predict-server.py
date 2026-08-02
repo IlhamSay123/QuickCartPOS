@@ -1,3 +1,4 @@
+import os
 from flask import Flask, jsonify, request
 import pandas as pd
 import numpy as np
@@ -107,4 +108,6 @@ def health():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5001)
+    # Render (and most PaaS hosts) assign the port dynamically via $PORT —
+    # 5001 is just the local-dev default when nothing else is set.
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5001)))
