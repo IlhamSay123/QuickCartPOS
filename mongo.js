@@ -17,6 +17,12 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  // Set only while a password-reset link is outstanding; cleared once used
+  // or expired. The raw token is never stored — only its SHA-256 hash, same
+  // idea as password hashing: a database leak shouldn't hand out usable
+  // reset tokens directly.
+  resetTokenHash: { type: String, select: false },
+  resetTokenExpiry: { type: Date, select: false },
 });
 
 // Hash password before saving to database

@@ -1,17 +1,43 @@
-version: '3.8'
-
 services:
   quickcart:
     build: .
     ports:
       - "3000:3000"
     environment:
+      # MONGO_URI points at the "mongo" service name (Docker-internal DNS), not
+      # localhost — that's different from the MONGO_URI in .env used for local dev.
       - MONGO_URI=mongodb://mongo:27017/quickcartPOS
-      - SECRET_KEY=ABCDEFGHIJKLMNOPQRSTUVWXYZ
+      # Pulled from .env (gitignored) via Compose's built-in variable substitution —
+      # never hardcode this here, it was previously committed in plain text.
+      - SECRET_KEY=${SECRET_KEY}
+      # "ai" is the forecasting service below, reached by its Compose service
+      # name — same pattern as MONGO_URI using "mongo" above.
+      - FORECAST_SERVICE_URL=http://ai:5001
+      # Optional — only needed for real password-reset emails. Left unset in
+      # .env, these all resolve to empty and the app falls back to logging
+      # reset links instead of sending them (fine until you wire up SMTP).
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_SECURE=${SMTP_SECURE}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASS=${SMTP_PASS}
+      - SMTP_FROM=${SMTP_FROM}
     depends_on:
       - mongo
+      - ai
     volumes:
       - .:/app
+      # Without this, the bind mount above replaces the image's own Linux-built
+      # node_modules with whatever's on the host — including nothing at all, if
+      # someone runs `docker-compose up` on a fresh clone that never had `npm
+      # install` run locally. This keeps node_modules container-managed instead.
+      - /app/node_modules
+    restart: always
+
+  ai:
+    build: ./AI
+    ports:
+      - "5001:5001"
     restart: always
 
   mongo:

@@ -1,35 +1,57 @@
-let forecastType = "next"; // default
-
 document.addEventListener("DOMContentLoaded", () => {
-  console.log(" Forecast script loaded");
   fetchAndRenderForecast();
 });
 
 function fetchAndRenderForecast() {
-  fetch(`http://127.0.0.1:5001/api/predict-revenue?target=${forecastType}`)
+  // Same-origin, through the Node backend — see /api/forecast in index.js.
+  // The model there trains fresh on this business's own sales every request.
+  fetch(`/api/forecast`)
     .then(res => res.json())
     .then(data => {
-      console.log("API response:", data);
-
-      const revenue = data.predicted_revenue;
       const tipEl = document.getElementById("forecast-tip");
       const amountEl = document.getElementById("forecast-amount");
       const statsEl = document.getElementById("model-stats");
       const confEl = document.getElementById("confidence-range");
 
+      if (data.error === "not_enough_data") {
+        amountEl.textContent = "Not enough data yet";
+        tipEl.textContent = data.message || "Log or import more sales to unlock forecasting.";
+        statsEl.textContent = `${data.months_available || 0} month(s) of history so far — need at least 2.`;
+        confEl.textContent = "—";
+        return;
+      }
+
+      if (data.error) {
+        amountEl.textContent = "Unavailable";
+        tipEl.textContent = "Couldn't generate a forecast right now — try again shortly.";
+        return;
+      }
+
+      const revenue = data.predicted_revenue;
       if (revenue !== undefined && amountEl && tipEl) {
         amountEl.textContent = `£${Number(revenue).toLocaleString()}`;
-        if (revenue > 40000) {
+
+        // Compare against THIS business's own trailing average, not fixed
+        // £ thresholds — a fixed cutoff tuned for one dataset's scale would
+        // tell nearly every small business "sales may decline" regardless of
+        // how they're actually doing, just because their revenue is smaller.
+        const history = ((data.chart_data && data.chart_data.values) || []).slice(0, -1);
+        const avg = history.length ? history.reduce((a, b) => a + b, 0) / history.length : revenue;
+        const changePct = avg > 0 ? ((revenue - avg) / avg) * 100 : 0;
+
+        if (changePct > 10) {
           tipEl.textContent = "Sales are projected to grow — consider investing in marketing or seasonal inventory.";
-        } else if (revenue > 25000) {
+        } else if (changePct > -10) {
           tipEl.textContent = "Revenue is stable. Review slow-moving categories and optimize promotions.";
         } else {
           tipEl.textContent = "Sales may decline — explore bundle offers or customer engagement strategies.";
         }
       }
 
-      if (statsEl && data.r2_score !== undefined && data.rmse !== undefined) {
-        statsEl.textContent = `R² Score: ${data.r2_score}, RMSE: £${Math.round(data.rmse).toLocaleString()}`;
+      if (statsEl) {
+        const r2Text = data.r2_score !== null && data.r2_score !== undefined ? data.r2_score : "N/A";
+        const rmseText = data.rmse !== null && data.rmse !== undefined ? `£${Math.round(data.rmse).toLocaleString()}` : "N/A";
+        statsEl.textContent = `R² Score: ${r2Text}, RMSE: ${rmseText} (based on ${data.months_used || "?"} months of your data)`;
       }
 
       if (confEl && data.confidence_band) {
@@ -39,8 +61,6 @@ function fetchAndRenderForecast() {
 
       if (data.chart_data) {
         renderForecastChart(data.chart_data, data.confidence_band);
-      } else {
-        console.warn(" Missing chart_data in response.");
       }
     })
     .catch(err => {
