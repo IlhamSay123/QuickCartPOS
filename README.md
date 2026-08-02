@@ -1,38 +1,109 @@
 # QuickCartPOS
-🛒 QuickCartPOS – Smart Sales & Forecasting Web App
-QuickCartPOS is a modern, full-stack point-of-sale (POS) web application built to help small businesses manage sales, track performance, and make data-driven decisions.
 
-🔧 Purpose & Functionality:
-The app streamlines the sales process by allowing users to:
+A multi-tenant sales-tracking and forecasting web app for small businesses. Each
+business gets its own account and its own private sales data — record sales one
+at a time or import a spreadsheet of past history, then get dashboards, category
+breakdowns, and an AI-generated revenue forecast trained on that business's own
+numbers.
 
-Record and manage daily sales
+## Features
 
-Monitor revenue and profit trends
+- **Accounts & tenancy** — every business's sales data is fully isolated; nobody
+  can see or touch another business's records, including by guessing an ID
+- **Record sales** one at a time, or **import a CSV** of existing history (common
+  column-name variations like `Sale Date`/`Product`/`Qty` are recognized
+  automatically — no need to match an exact template)
+- **Dashboards**: sales overview, category performance, customer/order insights,
+  full sales list with sort/edit/delete, CSV export
+- **AI revenue forecasting** — a fresh regression model is trained per business,
+  per request, on that business's own monthly totals (not one static model
+  trained on sample data). Falls back gracefully with a clear message if there
+  isn't enough sales history yet
+- **Security**: hashed + salted passwords, CSRF protection on every form, rate
+  limiting on login/register/password-reset, a minimum password strength
+  requirement, and a full forgot/reset-password flow
 
-Analyze customer behavior (basket size, order frequency, etc.)
+## Tech stack
 
-View detailed dashboards for insights and performance tracking
+| Layer          | Tools |
+|-----------------|-------|
+| Frontend        | HTML, CSS, vanilla JS, Chart.js |
+| Backend         | Node.js / Express, EJS templates |
+| Database        | MongoDB (Mongoose) |
+| Forecasting     | Python, Flask, scikit-learn |
+| Containerization | Docker / Docker Compose |
 
-🧠 AI Forecasting Integration:
-To support better planning and decision-making, the system includes an AI-powered revenue forecasting module. This feature:
+## Running locally
 
-Analyzes past sales data
+### Option A — Docker Compose (recommended)
 
-Predicts revenue for upcoming months
+Starts the web app, MongoDB, and the forecasting service together:
 
-Displays forecasts visually with confidence intervals
+```bash
+docker-compose up --build
+```
 
-Helps users plan stock, staffing, and promotions more effectively
+Then open **http://localhost:3000**.
 
-The AI model was trained on historical sales trends and integrated directly into the forecasting page, offering both monthly and category-level predictions with model accuracy metrics (R², RMSE).
+### Option B — running each piece yourself
 
-💻 Technologies Used:
-Frontend: HTML, CSS, JavaScript (Chart.js)
+Needs Node.js, Python 3, and a running MongoDB instance.
 
-Backend: Node.js / Express
+```bash
+npm install
+npm start
+```
 
-Database: MongoDB
+In a separate terminal, for the forecasting service:
 
-AI Model: Python (scikit-learn), integrated via Flask API
+```bash
+cd AI
+pip install -r requirements.txt
+python predict-server.py
+```
 
-Containerization: Docker (for deployment)
+Then open **http://localhost:3000**.
+
+## Environment variables
+
+Create a `.env` file in the project root (never commit this — it's gitignored):
+
+```bash
+MONGO_URI=mongodb://127.0.0.1:27017/quickcartPOS
+SECRET_KEY=some-long-random-string
+PORT=3000
+FORECAST_SERVICE_URL=http://127.0.0.1:5001
+
+# Optional — for real password-reset emails. Without these, reset links are
+# logged to the server console instead (fine for local dev/testing).
+# SMTP_HOST=smtp.yourprovider.com
+# SMTP_PORT=587
+# SMTP_SECURE=false
+# SMTP_USER=
+# SMTP_PASS=
+# SMTP_FROM=
+```
+
+`SECRET_KEY` signs sessions and JWTs — use a long random value, and a
+different one in production than in dev.
+
+## Testing
+
+```bash
+npm test
+```
+
+Covers auth, CSRF enforcement, rate limiting, the forgot/reset-password flow,
+and tenant isolation (two separate businesses, verifying neither can see or
+modify the other's data).
+
+## Project structure
+
+```
+index.js            Express app (routes, middleware) — server.js starts it listening
+mongo.js / sale.js   Mongoose models (User, Sale)
+utils/               CSV import parsing, password-reset email sending
+src/                 EJS-rendered views, styles, client-side JS
+AI/                  Flask forecasting service (separate from the Node app)
+tests/               Jest + Supertest test suite
+```
