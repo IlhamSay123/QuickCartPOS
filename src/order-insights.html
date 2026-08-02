@@ -2,18 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Customer & Order Insights</title>
-  <link rel="stylesheet" href="styles/index.css" />
+  <title>Customer &amp; Order Insights | QuickCartPOS</title>
+  <link rel="stylesheet" href="/styles/index.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script defer src="script/orderInsights.js"></script>
+  <script defer src="/script/orderInsights.js"></script>
 </head>
 <body>
-  <header class="header-bar">
-    <h1 class="title">Customer & Order Insights</h1>
-    <a href="/" class="button-orange">← Back to Dashboard</a>
-  </header>
+  <%- include('partials/nav.html') %>
 
   <main class="container">
+    <h1>Customer &amp; Order Insights</h1>
 
     <section class="chart-container">
       <h2>📈 Orders per Month</h2>
@@ -21,22 +19,20 @@
     </section>
 
     <section class="chart-container">
-  <h2>📊 Quantity per Sale</h2>
-  <canvas id="quantity-chart" height="100"></canvas>
-</section>
+      <h2>📊 Quantity per Sale</h2>
+      <canvas id="quantity-chart" height="100"></canvas>
+    </section>
 
-<section class="chart-container">
-  <h2>💰 Spend per Sale</h2>
-  <label for="amount-bin">Bin Size:</label>
-  <select id="amount-bin">
-    <option value="5">£5</option>
-    <option value="10" selected>£10</option>
-    <option value="20">£20</option>
-  </select>
-  <canvas id="amount-chart" height="100"></canvas>
-</section>
-
-
+    <section class="chart-container">
+      <h2>💰 Spend per Sale</h2>
+      <label for="amount-bin">Bin Size</label>
+      <select id="amount-bin">
+        <option value="5">£5</option>
+        <option value="10" selected>£10</option>
+        <option value="20">£20</option>
+      </select>
+      <canvas id="amount-chart" height="100"></canvas>
+    </section>
   </main>
 
   <footer>

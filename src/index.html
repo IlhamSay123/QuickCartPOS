@@ -4,120 +4,67 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>QuickCartPOS Dashboard</title>
-
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="styles/index.css">
-  <style>
-    footer {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      background-color: #333;
-      color: white;
-      text-align: center;
-      padding: 10px 0;
-    }
-  </style>
+  <link rel="stylesheet" href="/styles/index.css">
 </head>
 <body>
-  <!-- Header with Logout Button -->
-  <header class="navbar navbar-dark bg-primary">
-    <div class="container-fluid">
-      <h1 class="navbar-brand mb-0">QuickCartPOS</h1>
-      <form action="/logout" method="get">
-        <button type="submit" class="logout-btn btn btn-warning">Logout</button>
-      </form>
-    </div>
-  </header>
+  <%- include('partials/nav.html') %>
 
-  <!-- Main Content -->
-  <main class="container mt-4 mb-5">
-    <div class="welcome-message">
-      Welcome to your Dashboard!
-    </div>
+  <main class="container">
+    <h1>Welcome to your Dashboard!</h1>
+    <p class="muted">Here's a quick way into everything — track sales, see how the business is doing, and get a forecast.</p>
 
-    <div class="row g-4">
-      <!-- Sales Overview -->
-      <div class="col-md-6">
-        <div class="card feature">
-          <div class="card-body">
-            <h5 class="card-title">Sales Overview</h5>
-            <p class="card-text">Track revenue, units sold, and growth rates.</p>
-            <a href="salesOverview.html" class="btn btn-primary">View Sales Overview</a>
-          </div>
-        </div>
+    <div class="card-grid">
+      <div class="card feature">
+        <h2>Sales Overview</h2>
+        <p>Track revenue, units sold, and growth rates.</p>
+        <a href="/salesOverview" class="btn btn-primary">View Sales Overview</a>
       </div>
 
-      <!-- Category Analysis -->
-      <div class="col-md-6">
-        <div class="card feature">
-          <div class="card-body">
-            <h5 class="card-title">Category Performance</h5>
-            <p class="card-text">See which categories perform the best.</p>
-            <a href="categoryPerformance.html" class="btn btn-primary">View Category Analysis</a>
-          </div>
-        </div>
+      <div class="card feature">
+        <h2>Category Performance</h2>
+        <p>See which categories perform the best.</p>
+        <a href="/categoryPerformance" class="btn btn-primary">View Category Analysis</a>
       </div>
 
-      <!-- View All Sales -->
-      <div class="col-md-12">
-        <div class="card feature border-success">
-          <div class="card-body">
-            <h5 class="card-title text-success">All Sales</h5>
-            <p class="card-text">Browse and manage your full dataset of sales.</p>
-            <a href="/all-sales" class="btn btn-success">View All Sales</a>
-          </div>
-        </div>
+      <div class="card feature">
+        <h2>Customer &amp; Order Insights</h2>
+        <p>Analyze order patterns and customer behaviors.</p>
+        <a href="/order-insights" class="btn btn-primary">View Insights</a>
       </div>
-      <a href="/export-sales" class="btn btn-outline-dark mt-2">⬇️ Export Sales Data</a>
 
-      <!-- Customer & Forecast Section -->
-<div class="row g-4">
-  <!-- Customer & Order Insights -->
-  <div class="col-md-6">
-    <div class="card feature">
-      <div class="card-body">
-        <h5 class="card-title">Customer & Order Insights</h5>
-        <p class="card-text">Analyze order patterns and customer behaviors.</p>
-        <a href="order-insights.html" class="btn btn-primary">View Insights</a>
+      <div class="card feature">
+        <h2>Forecast &amp; Tips</h2>
+        <p>Predict sales trends and get growth tips.</p>
+        <a href="/forecast" class="btn btn-primary">View Forecasts</a>
       </div>
     </div>
-  </div>
 
-  <!-- Forecast & Tips -->
-  <div class="col-md-6">
-    <div class="card feature">
-      <div class="card-body">
-        <h5 class="card-title">Forecast & Tips</h5>
-        <p class="card-text">Predict sales trends and get growth tips.</p>
-        <a href="forecast.html" class="btn btn-primary">View Forecasts</a>
+    <div class="card feature featured" style="margin-bottom: 1.5rem;">
+      <h2>All Sales</h2>
+      <p>Browse and manage your full dataset of sales.</p>
+      <div style="display:flex; gap:0.6rem; flex-wrap:wrap;">
+        <a href="/all-sales" class="btn btn-success">View All Sales</a>
+        <a href="/import-sales" class="btn btn-outline">📤 Import Sales (CSV)</a>
+        <a href="/export-sales" class="btn btn-outline">⬇️ Export Sales Data</a>
       </div>
     </div>
-  </div>
-</div>
 
-
-    <!-- Last Updated Section -->
-    <div class="text-end text-muted small mt-3">Last updated: <span id="last-updated">Loading...</span></div>
+    <div class="text-center muted" style="font-size:0.82rem;">Last updated: <span id="last-updated">Loading...</span></div>
   </main>
 
-  <!-- Footer -->
   <footer>
-    <div class="container">
-      <a href="about.html" class="text-decoration-none">About Us</a> |
-      <a href="contact.html" class="text-decoration-none">Contact Us</a>
+    <div class="footer-links">
+      <a href="/about">About Us</a>
+      <a href="/contact">Contact Us</a>
     </div>
   </footer>
 
-  <!-- Bootstrap JavaScript Bundle -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const now = new Date();
       document.getElementById('last-updated').textContent = now.toLocaleString();
     });
   </script>
-  <script src="script/index.js"></script>
+  <script src="/script/index.js"></script>
 </body>
 </html>

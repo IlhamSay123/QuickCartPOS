@@ -3,66 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Category Performance</title>
- <!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<!-- Custom Styles -->
-<link rel="stylesheet" href="styles/profitAnalysis.css" />
-
+  <title>Category Performance | QuickCartPOS</title>
+  <link rel="stylesheet" href="/styles/index.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
-    <header class="navbar navbar-dark bg-primary" style="position: relative;">
-  <div class="container-fluid">
-    <h1 class="navbar-brand mb-0">Category Performance</h1>
-    <a href="index.html" class="btn btn-warning" style="position: absolute; top: 10px; right: 20px;">Back to Dashboard</a>
-  </div>
-</header>
+  <%- include('partials/nav.html') %>
 
-
-  <main>
-    <!-- Content dynamically injected by JS -->
+  <main class="container">
+    <h1>Category Performance</h1>
+    <!-- Content dynamically injected by script/categoryPerformance.js -->
   </main>
 
   <footer>
     <p>&copy; 2025 QuickCartPOS</p>
   </footer>
 
-  <!-- Scripts -->
-  <script src="script/categoryPerformance.js"></script>
-  <script>
-   
-    fetch('/api/category-performance')
-      .then(response => response.json())
-      .then(data => {
-        const ctx = document.getElementById('category-chart')?.getContext('2d');
-        if (!ctx) return;
-        const chart = new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: data.categories,
-            datasets: [{
-              label: 'Revenue',
-              data: data.revenue,
-              backgroundColor: 'rgba(75, 192, 192, 0.6)',
-              borderColor: 'rgba(75, 192, 192, 1)',
-              borderWidth: 1
-            }]
-          },
-          options: {
-            scales: {
-              y: { beginAtZero: true }
-            }
-          }
-        });
-
-        document.getElementById('top-category-name').innerText = data.topCategory.name;
-        document.getElementById('top-category-revenue').innerText = `£${data.topCategory.revenue}`;
-
-      })
-      .catch(error => console.error('Error fetching category performance data:', error));
-  </script>
+  <script src="/script/categoryPerformance.js"></script>
 </body>
 </html>

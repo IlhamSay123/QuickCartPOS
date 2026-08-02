@@ -2,31 +2,35 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Edit Sale Row</title>
+  <title>Edit Sale | QuickCartPOS</title>
   <link rel="stylesheet" href="/styles/index.css">
 </head>
 <body>
-  <header class="header-bar">
-    <h1 class="title">Edit Sale</h1>
-    <a href="/all-sales" class="button-orange">← Back to All Sales</a>
-  </header>
+  <%- include('partials/nav.html') %>
 
   <main class="container">
-    <form action="/edit-sale/<%= index %>" method="POST" class="form-card">
-      <label for="date">Date:</label>
+    <h1>Edit Sale</h1>
+
+    <form action="/edit-sale/<%= id %>" method="POST" class="form-card">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <label for="date">Date</label>
       <input type="date" name="date" value="<%= sale.date %>" required>
 
-      <label for="category">Product Category:</label>
+      <label for="category">Product Category</label>
       <input type="text" name="category" value="<%= sale.category %>" required>
 
-      <label for="quantity">Quantity:</label>
+      <label for="quantity">Quantity</label>
       <input type="number" name="quantity" value="<%= sale.quantity %>" required>
 
-      <label for="price">Price per Unit (£):</label>
+      <label for="price">Price per Unit (£)</label>
       <input type="number" name="price" step="0.01" value="<%= sale.price %>" required>
 
-      <button type="submit" class="btn btn-warning mt-3">Update Sale</button>
+      <button type="submit" class="btn-warning">Update Sale</button>
     </form>
+
+    <div class="text-center mt-4">
+      <a href="/all-sales" class="btn btn-outline">← Back to All Sales</a>
+    </div>
   </main>
 
   <footer>

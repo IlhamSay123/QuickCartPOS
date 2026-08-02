@@ -3,47 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    <link rel="stylesheet" href="styles/register.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <title>Register | QuickCartPOS</title>
+    <link rel="stylesheet" href="/styles/index.css">
 </head>
 <body>
-    <div class="container">
-        <div class="inner-container">
-            <!-- Registration Form Section -->
-            <div class="main-content">
-                <div class="form-container">
+    <div class="auth-shell">
+        <div class="auth-panel">
+            <div class="auth-form">
+                <div class="auth-form-inner">
+                    <h1>Sign Up</h1>
                     <form action="/register" method="post">
-                        <h1>Sign Up</h1>
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                         <input type="text" name="name" placeholder="Your Name" required>
                         <input type="email" name="email" placeholder="Your Email" required autocomplete="email">
-                        <input type="password" name="password" placeholder="Password" id="pass1" required 
+                        <input type="password" name="password" placeholder="Password" id="pass1" required
+                               minlength="8"
                                onkeyup="{if(this.value !== document.getElementById('pass2').value)
                                {document.getElementById('error').innerHTML = 'Password doesn\'t Match';
                                document.getElementById('submit').disabled=true;}else
                                {document.getElementById('error').innerHTML = '';
                                document.getElementById('submit').disabled=false;};}" autocomplete="new-password"/>
-                        <input type="password" name="password-repeat" placeholder="Repeat Your Password" id="pass2" required 
+                        <input type="password" name="password-repeat" placeholder="Repeat Your Password" id="pass2" required
+                               minlength="8"
                                onkeyup="{if(this.value !== document.getElementById('pass1').value)
                                {document.getElementById('error').innerHTML = 'Password doesn\'t Match';
                                document.getElementById('submit').disabled=true;}else
                                {document.getElementById('error').innerHTML = '';
                                document.getElementById('submit').disabled=false;};}" autocomplete="new-password" />
+                        <p class="muted" style="font-size:0.78rem; margin:-0.1rem 0 0.5rem;">At least 8 characters, with a letter and a number.</p>
                         <div id="error"></div>
-                        <div class="terms-conditions">
-                            <input type="checkbox" name="" id="terms-conditions-input" required>
-                            <label for="terms-conditions-input">I agree to all statements in <a href="#">Terms of service</a></label>
+                        <div class="terms-row">
+                            <input type="checkbox" name="terms" id="terms-conditions-input" required>
+                            <label for="terms-conditions-input" style="margin:0;">I agree to all statements in <a href="#">Terms of service</a></label>
                         </div>
                         <button type="submit" name="submit" id="submit">Register</button>
                     </form>
-                    <div class="login-container">
-                        <p>Already have an account? <a href="/login">Login</a></p>
-                    </div>
+                    <p class="auth-footnote">Already have an account? <a href="/login">Login</a></p>
                 </div>
             </div>
-            <!-- Image Section -->
-            <div class="image-container">
-                <img src="images/signup-image.jpg" alt="Register">
+            <div class="auth-art">
+                <img src="/images/signup-image.jpg" alt="Register illustration">
             </div>
         </div>
     </div>

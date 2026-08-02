@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Import Sales | QuickCartPOS</title>
+  <link rel="stylesheet" href="/styles/index.css">
+</head>
+<body>
+  <%- include('partials/nav.html') %>
+
+  <main class="container">
+    <h1>Import Sales</h1>
+    <p class="muted" style="max-width:560px;">
+      Already tracking sales somewhere else — a spreadsheet, an export from Square,
+      Shopify, or your accounting software? Upload it here as a CSV to bring in your
+      history. New sales after that can be logged one at a time from
+      <a href="/add-sale">Add a Sale</a>.
+    </p>
+    <p class="muted" style="max-width:560px;">
+      The file needs a header row with columns for date, category, quantity, and price
+      (total amount is optional — it's calculated if missing). Common column name
+      variations are recognized automatically, so it doesn't need to match an exact
+      template.
+    </p>
+
+    <% if (error) { %>
+      <div class="alert alert-danger"><strong>Import failed:</strong> <%= error %></div>
+    <% } %>
+
+    <% if (imported !== null) { %>
+      <div class="alert alert-success">
+        <strong>Imported <%= imported %> sale<%= imported === 1 ? "" : "s" %>.</strong>
+        <% if (skipped > 0) { %>
+          <%= skipped %> row<%= skipped === 1 ? "" : "s" %> skipped — missing date, category,
+          quantity, or price.
+        <% } %>
+      </div>
+    <% } %>
+
+    <form action="/import-sales" method="POST" enctype="multipart/form-data" class="form-card">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <label for="file">CSV file</label>
+      <input type="file" name="file" accept=".csv,text/csv" required>
+      <button type="submit">Upload</button>
+    </form>
+
+    <div class="text-center mt-4">
+      <a href="/all-sales" class="btn btn-outline">📋 View All Sales</a>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 QuickCartPOS</p>
+  </footer>
+</body>
+</html>

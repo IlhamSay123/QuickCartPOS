@@ -3,56 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sales Analysis</title>
-
-  <!-- Link to CSS -->
-  <link rel="stylesheet" href="styles/profitAnalysis.css">
-
-  <!-- Link to Chart.js for rendering graphs -->
+  <title>Sales Analysis | QuickCartPOS</title>
+  <link rel="stylesheet" href="/styles/index.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-<header class="navbar navbar-dark bg-primary">
-  <div class="container-fluid">
-    <h1 class="navbar-brand mb-0">Sales Analysis</h1>
-    <a href="/" class="btn btn-warning" style="position: absolute; top: 10px; right: 20px;">Back to Dashboard</a>
-  </div>
-</header>
+  <%- include('partials/nav.html') %>
 
+  <main class="container">
+    <h1>Sales Analysis</h1>
 
-  <main>
-    <!-- Revenue Chart Section -->
     <section class="chart-container">
       <h2>Total Revenue Over Time</h2>
       <canvas id="profit-chart" aria-label="Total Revenue Over Time" role="img"></canvas>
     </section>
 
-    <!-- Price Per Unit Chart Section -->
     <section class="chart-container">
       <h2>Average Price Per Unit Over Time</h2>
       <canvas id="price-chart" aria-label="Average Price Per Unit Over Time" role="img"></canvas>
     </section>
 
-    <!-- Units Sold Chart Section -->
     <section class="chart-container">
       <h2>Units Sold Over Time</h2>
       <canvas id="total-chart" aria-label="Units Sold Over Time" role="img"></canvas>
     </section>
 
-    <!-- Sales Analysis Summary Section -->
-    <section class="analysis-boxes">
-      <h2>Sales Analysis Summary</h2>
-      <div class="analysis-box">
-        <h3>Total Revenue</h3>
-        <p id="total-profit" aria-live="polite">Loading...</p>
-      </div>
-      <div class="analysis-box">
-        <h3>Total Units Sold</h3>
-        <p id="top-category" aria-live="polite">Loading...</p>
-      </div>
-      <div class="analysis-box">
-        <h3>Average Price per Unit</h3>
-        <p id="top-age-group" aria-live="polite">Loading...</p>
+    <section>
+      <h2 style="margin-bottom:1rem;">Sales Analysis Summary</h2>
+      <div class="analysis-boxes">
+        <div class="analysis-box">
+          <h3>Total Revenue</h3>
+          <p id="total-profit" aria-live="polite">Loading...</p>
+        </div>
+        <div class="analysis-box">
+          <h3>Total Units Sold</h3>
+          <p id="top-category" aria-live="polite">Loading...</p>
+        </div>
+        <div class="analysis-box">
+          <h3>Average Price per Unit</h3>
+          <p id="top-age-group" aria-live="polite">Loading...</p>
+        </div>
       </div>
     </section>
   </main>
@@ -61,7 +51,6 @@
     <p>&copy; 2025 QuickCartPOS</p>
   </footer>
 
-  <!-- Link to JavaScript file -->
-  <script src="script/profitAnalysis.js"></script>
+  <script src="/script/profitAnalysis.js"></script>
 </body>
 </html>

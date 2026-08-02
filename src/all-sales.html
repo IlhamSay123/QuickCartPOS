@@ -2,58 +2,56 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>All Sales Records</title>
+  <title>All Sales | QuickCartPOS</title>
   <link rel="stylesheet" href="/styles/index.css">
-  <style>
-    .sale-card {
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    }
-    .sort-controls {
-      display: flex;
-      justify-content: flex-end;
-      margin-bottom: 1rem;
-    }
-  </style>
 </head>
 <body>
-  <header class="header-bar">
-    <h1 class="title">All Sales</h1>
-    <a href="/" class="button-orange">← Back to Dashboard</a>
-  </header>
+  <%- include('partials/nav.html') %>
 
   <main class="container">
-    <label for="sort-field">Sort by:</label>
-    <select id="sort-field" onchange="sortSales()" style="margin-left: 10px;">
-      <option value="date-asc">Date ↑</option>
-      <option value="date-desc">Date ↓</option>
-      <option value="category-asc">Category A–Z</option>
-      <option value="category-desc">Category Z–A</option>
-      <option value="amount-asc">Amount ↑</option>
-      <option value="amount-desc">Amount ↓</option>
-    </select>
-
+    <div class="toolbar">
+      <h1 style="margin:0;">All Sales</h1>
+      <div style="display:flex; gap:0.6rem; flex-wrap:wrap; align-items:center;">
+        <label for="sort-field" style="margin:0;">Sort by</label>
+        <select id="sort-field" onchange="sortSales()">
+          <option value="date-asc">Date ↑</option>
+          <option value="date-desc">Date ↓</option>
+          <option value="category-asc">Category A–Z</option>
+          <option value="category-desc">Category Z–A</option>
+          <option value="amount-asc">Amount ↑</option>
+          <option value="amount-desc">Amount ↓</option>
+        </select>
+        <a href="/add-sale" class="btn btn-success">➕ Add New Sale</a>
+        <a href="/import-sales" class="btn btn-outline">📤 Import CSV</a>
+      </div>
     </div>
 
-    <div style="text-align: right; margin-bottom: 1rem;">
-      <a href="/add-sale" class="btn btn-success">➕ Add New Sale</a>
-    </div>
+    <% if (rows.length === 0) { %>
+      <div class="card text-center">
+        <p class="muted" style="margin:0;">No sales recorded yet.</p>
+        <div style="display:flex; gap:0.6rem; justify-content:center; margin-top:1rem;">
+          <a href="/add-sale" class="btn btn-primary">Add your first sale</a>
+          <a href="/import-sales" class="btn btn-outline">Import from a file</a>
+        </div>
+      </div>
+    <% } %>
 
     <div id="sales-list">
-      <% rows.forEach((row, idx) => { %>
-        <div class="sale-card" data-date="<%= row.values[1] %>">
-          <strong>Sale #<%= row.id %></strong>
+      <% rows.forEach((row) => { %>
+        <div class="sale-card">
+          <strong><%= row.values[0] %> — <%= row.values[1] %></strong>
           <ul>
             <% headers.forEach((header, i) => { %>
               <li><strong><%= header %>:</strong> <%= row.values[i] %></li>
             <% }) %>
           </ul>
-          <div>
+          <div class="row-actions">
             <a href="/edit-sale/<%= row.id %>" class="btn btn-sm btn-warning">Edit</a>
-            <a href="/delete-sale/<%= row.id %>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this sale?')">Delete</a>
+            <form action="/delete-sale/<%= row.id %>" method="POST" style="margin:0;"
+                  onsubmit="return confirm('Are you sure you want to delete this sale?')">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+            </form>
           </div>
         </div>
       <% }) %>
@@ -67,9 +65,6 @@ function sortSales() {
   const cards = Array.from(list.children);
 
   cards.sort((a, b) => {
-    const valA = a.innerText.toLowerCase();
-    const valB = b.innerText.toLowerCase();
-
     const getValue = (label, element) => {
       const match = element.innerText.match(new RegExp(`${label}:\\s*(.+)`));
       return match ? match[1].trim() : "";
@@ -97,6 +92,5 @@ function sortSales() {
   <footer>
     <p>&copy; 2025 QuickCartPOS</p>
   </footer>
-
 </body>
 </html>

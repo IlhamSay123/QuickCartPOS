@@ -3,70 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sales Overview - QuickCartPOS</title>
-
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="styles/index.css">
+  <title>Sales Overview | QuickCartPOS</title>
+  <link rel="stylesheet" href="/styles/index.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <header class="navbar navbar-dark bg-primary">
-    <div class="container-fluid">
-      <h1 class="navbar-brand mb-0">Sales Overview</h1>
-      <a href="index.html" class="btn btn-warning">Back to Dashboard</a>
-    </div>
-  </header>
+  <%- include('partials/nav.html') %>
 
-  <main class="container mt-4 mb-5">
-   <!-- All-Year Stats Section -->
-<div class="border rounded p-3 mb-4" style="background-color: #f8f9fa;">
-  <h5 class="text-center mb-3">All-Year Stats</h5>
-  <div class="row text-center">
-    <div class="col">
-      <h6>Total Revenue</h6>
-      <p id="total-revenue">Loading...</p>
-    </div>
-    <div class="col">
-      <h6>Revenue Growth Rate</h6>
-      <p id="growth-rate">Loading...</p>
-    </div>
-    <div class="col">
-      <h6>Units Sold</h6>
-      <p id="units-sold">Loading...</p>
-    </div>
-    <div class="col">
-      <h6>Average Order Value (AOV)</h6>
-      <p id="aov">Loading...</p>
-    </div>
-    <div class="col">
-      <h6>Peak Sales Month</h6>
-      <p id="peak-month">Loading...</p>
-    </div>
-  </div>
-</div>
+  <main class="container">
+    <h1>Sales Overview</h1>
 
+    <div class="card" style="margin-bottom:1.5rem;">
+      <h2 style="font-size:1rem; text-align:center; margin-bottom:1rem;">All-Year Stats</h2>
+      <div class="stat-grid">
+        <div class="stat"><h6>Total Revenue</h6><p id="total-revenue">Loading...</p></div>
+        <div class="stat"><h6>Revenue Growth Rate</h6><p id="growth-rate">Loading...</p></div>
+        <div class="stat"><h6>Units Sold</h6><p id="units-sold">Loading...</p></div>
+        <div class="stat"><h6>Average Order Value</h6><p id="aov">Loading...</p></div>
+        <div class="stat"><h6>Peak Sales Month</h6><p id="peak-month">Loading...</p></div>
+      </div>
+    </div>
 
-    <!-- Charts -->
-    <div class="mt-5">
-      <h4 class="text-center">Revenue Over Time</h4>
+    <div class="chart-container">
+      <h2>Revenue Over Time</h2>
       <canvas id="revenue-chart" height="100"></canvas>
     </div>
 
-    <div class="mt-5">
-      <h4 class="text-center">Units Sold Over Time</h4>
+    <div class="chart-container">
+      <h2>Units Sold Over Time</h2>
       <canvas id="units-chart" height="100"></canvas>
     </div>
   </main>
 
   <footer>
-    <div class="text-center py-3 bg-dark text-white">
-      <small>&copy; 2025 QuickCartPOS</small>
-    </div>
+    <p>&copy; 2025 QuickCartPOS</p>
   </footer>
 
-  <!-- Bootstrap JavaScript Bundle -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="script/salesOverview.js"></script>
+  <script src="/script/salesOverview.js"></script>
 </body>
 </html>
