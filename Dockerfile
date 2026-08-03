@@ -1,5 +1,9 @@
 # Use official Node.js image
-FROM node:18
+# Node 18's OpenSSL/TLS stack has a well-documented incompatibility with
+# MongoDB Atlas's TLS termination (MongoServerSelectionError: "SSL routines:
+# ssl3_read_bytes:tlsv1 alert internal error" during the handshake, not an
+# auth or network issue). Node 20+ resolves it.
+FROM node:20
 
 # Set working directory
 WORKDIR /app
